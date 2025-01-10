@@ -120,17 +120,15 @@ public class Templete {
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             fileChooser.setAcceptAllFileFilterUsed(false);
             fileChooser.addChoosableFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
-                    "Image Files", "jpg"));
+                    "Image Files", "jpg", "Jpeg"));
 
             // Tampilkan JFileChooser
             int userSelection = fileChooser.showOpenDialog(null);
 
             if (userSelection == JFileChooser.APPROVE_OPTION) {
                 try {
-                    // File yang dipilih oleh pengguna
                     File selectedFile = fileChooser.getSelectedFile();
 
-                    // Tentukan path relatif
                     String relativePath = "assets" + File.separator + selectedFile.getName();
 
                     path.setText(relativePath);

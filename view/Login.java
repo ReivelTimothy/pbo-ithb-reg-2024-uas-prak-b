@@ -18,7 +18,7 @@ public class Login {
         // Panel logo di atas
         JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel logoLabel = new JLabel();
-        String logoPath = "assets\\logo.png";
+        String logoPath = "UasPrakPbo\\assets\\logo.png";
         ImageIcon logoIcon = new ImageIcon(logoPath);
         logoLabel.setIcon(logoIcon);
         logoPanel.add(logoLabel);

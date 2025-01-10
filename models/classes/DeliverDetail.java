@@ -4,18 +4,36 @@ import java.sql.Date;
 import models.enumeration.DeliverStatus;
 
 public class DeliverDetail {
-    private int id, customer_id;
+    private int id, Transaction_id;
     private DeliverStatus status;
     private String currentPosition, evidence, update_By;
     private Date date;
 
-    public DeliverDetail(int id, int customer_id, DeliverStatus status, String currentPosition, String evidence,
-            String update_By, Date date) {
+    public DeliverDetail(int id, int Transaction_id, DeliverStatus status, String currentPosition, String evidence,
+            String update_By, Date date) { // buat ngambil datanya 
         this.id = id;
-        this.customer_id = customer_id;
+        this.Transaction_id = Transaction_id;
         this.status = status;
         this.currentPosition = currentPosition;
         this.evidence = evidence;
+        this.update_By = update_By;
+        this.date = date;
+    }
+    public DeliverDetail(int Transaction_id, DeliverStatus status, String currentPosition, String evidence,
+            String update_By, Date date) { // buat masukin data khusus arrived
+        this.Transaction_id = Transaction_id;
+        this.status = status;
+        this.currentPosition = currentPosition;
+        this.evidence = evidence;
+        this.update_By = update_By;
+        this.date = date;
+    }
+
+    public DeliverDetail(int Transaction_id, DeliverStatus status, String currentPosition,
+            String update_By, Date date) { // buat masukin data selain status arrived
+        this.Transaction_id = Transaction_id;
+        this.status = status;
+        this.currentPosition = currentPosition;
         this.update_By = update_By;
         this.date = date;
     }
@@ -29,11 +47,11 @@ public class DeliverDetail {
     }
 
     public int getTransaction_id() {
-        return customer_id;
+        return Transaction_id;
     }
 
-    public void setCustomer_id(int customer_id) {
-        this.customer_id = customer_id;
+    public void Transaction_id(int Transaction_id) {
+        this.Transaction_id = Transaction_id;
     }
 
     public DeliverStatus getStatus() {

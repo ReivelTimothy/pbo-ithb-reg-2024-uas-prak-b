@@ -62,6 +62,8 @@ public class MainMenu {
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(addTransactionButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        buttonPanel.add(addDetailButton);
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(historyButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(logoutButton);
@@ -73,22 +75,22 @@ public class MainMenu {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        // Menentukan visibilitas tombol berdasarkan login status
         if (LoginSingleton.getInstance().getId() == -1) {
             loginButton.setVisible(true);
             regisButton.setVisible(true);
             addTransactionButton.setVisible(false);
             historyButton.setVisible(false);
             logoutButton.setVisible(false);
+            addDetailButton.setVisible(false);
         } else {
             loginButton.setVisible(false);
             regisButton.setVisible(false);
             addTransactionButton.setVisible(true);
+            addDetailButton.setVisible(true);
             historyButton.setVisible(true);
             logoutButton.setVisible(true);
         }
 
-        // Action untuk tombol
         loginButton.addActionListener(e -> {
             new Login().inputLogin();
             frame.dispose();
@@ -101,6 +103,16 @@ public class MainMenu {
 
         addTransactionButton.addActionListener(e -> {
             new AddDeliveryTransaction();
+            frame.dispose();
+        });
+
+        historyButton.addActionListener(e ->{
+            new TransactionHistoryView();
+            frame.dispose();
+        });
+
+        addDetailButton.addActionListener(e ->{
+            new AddDetailTransaction();
             frame.dispose();
         });
 
