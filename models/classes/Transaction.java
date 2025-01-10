@@ -15,6 +15,16 @@ public class Transaction {
         this.receipt_phone = receipt_phone;
     }
 
+    public Transaction(int customer_id, int expected_weight, int total_cost, String deliver_type,
+            String receipt_address, String receipt_phone) {
+        this.customer_id = customer_id;
+        this.expected_weight = expected_weight;
+        this.total_cost = total_cost;
+        this.deliver_type = deliver_type;
+        this.receipt_address = receipt_address;
+        this.receipt_phone = receipt_phone;
+    }
+
     public int getId() {
         return id;
     }

@@ -1,46 +1,26 @@
 package view;
 
 import java.awt.*;
-import java.io.File;
 import javax.swing.*;
-
 import controller.LoginSingleton;
 
 public class Login {
-    private JFrame frame;
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new Login().inputLogin());
-    }
 
     public Login() {
     }
 
     public void inputLogin() {
-        frame = new JFrame();
+        JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Login");
         frame.setLayout(new BorderLayout());
 
         // Panel logo di atas
-        JPanel logoPanel = new JPanel();
-        logoPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-
+        JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel logoLabel = new JLabel();
-        String logoPath = "UasPrakPbo\\assets\\logo.png";
-        File logoFile = new File(logoPath);
-        File logoFile2 = new File(logoFile.getAbsolutePath());
-        if (!logoFile2.exists()) {
-            System.out.println("File tidak ditemukan: " + logoFile.getAbsolutePath());
-        } else {
-            ImageIcon logoIcon = new ImageIcon(logoPath);
-            if (logoIcon.getIconWidth() == -1) {
-                System.out.println("File ditemukan tetapi tidak dapat dimuat: " + logoFile.getAbsolutePath());
-            } else {
-                logoLabel.setIcon(logoIcon);
-            }
-        }
-
+        String logoPath = "assets\\logo.png";
+        ImageIcon logoIcon = new ImageIcon(logoPath);
+        logoLabel.setIcon(logoIcon);
         logoPanel.add(logoLabel);
 
         // Panel form login
@@ -51,28 +31,40 @@ public class Login {
         JPanel telpPanel = Templete.getInstance().createInputText("No Telp");
         JPanel passwordPanel = Templete.getInstance().createInputPassword("Password");
 
+        // Panel untuk tombol
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+
         JButton submitButton = new JButton("Submit");
-        submitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JButton cancelButton = new JButton("Cancel");
+
+        buttonPanel.add(submitButton);
+        buttonPanel.add(cancelButton);
 
         formPanel.add(telpPanel);
-        formPanel.add(passwordPanel);
         formPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        formPanel.add(submitButton);
+        formPanel.add(passwordPanel);
+        formPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        formPanel.add(buttonPanel);
 
+        // Action listener untuk tombol
         submitButton.addActionListener(e -> {
             String telp = Templete.getInstance().getText(telpPanel);
             String pass = Templete.getInstance().getPassword(passwordPanel);
-            System.out.println(telp);
-            System.out.println(pass);
-            
+
             LoginSingleton.checkLogin(telp, pass);
-            
+
             if (LoginSingleton.getInstance().getId() != -1) {
-                new MainMenu();   
-                frame.dispose(); 
+                new MainMenu();
+                frame.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Login gagal, silakan coba lagi.");
             }
+        });
+
+        cancelButton.addActionListener(e -> {
+            frame.dispose();
+            new MainMenu();
         });
 
         frame.add(logoPanel, BorderLayout.NORTH);

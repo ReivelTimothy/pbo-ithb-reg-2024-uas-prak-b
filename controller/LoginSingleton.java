@@ -6,10 +6,12 @@ import java.sql.Statement;
 
 import javax.swing.JOptionPane;
 
+import models.classes.Customer;
+
 public class LoginSingleton {
     private static LoginSingleton instance;
     private int id = -1;
-    private int role;
+    private static Customer customer;
     private static DatabaseHandler conn = new DatabaseHandler();
 
     // Private constructor untuk mencegah pembuatan instance langsung
@@ -23,30 +25,30 @@ public class LoginSingleton {
         return instance;
     }
 
-    // Method untuk melakukan pengecekan login
+    
     public static void checkLogin(String nomorTelp, String password) {
         try {
-            conn.connect(); // Membuka koneksi ke database
+            conn.connect(); 
 
-            // Query untuk memeriksa data login
             String query = "SELECT * FROM customer WHERE phone='" + nomorTelp + "' AND password='" + password + "'";
             Statement stmt = conn.getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(query);
 
             if (rs.next()) {
-                // Mendapatkan data user dari result set
                 String pass = rs.getString("password");
                 String nama = rs.getString("name");
                 int id = rs.getInt("id");
-                int role = rs.getInt("role");
+                String alamat = rs.getString("address");
+                String telp = nomorTelp;
+                customer = new Customer(id, nama, password, alamat, telp);
 
-                // Memeriksa apakah password cocok
                 if (password.equals(pass)) {
                     LoginSingleton.getInstance().setId(id);
-                    LoginSingleton.getInstance().setRole(role);
                     JOptionPane.showMessageDialog(null, "Selamat Datang " + nama);
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "Maaf, password atau nomor telepon Anda salah");
+                    
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Nomor telepon tidak ditemukan");
@@ -55,11 +57,10 @@ public class LoginSingleton {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Database error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
-            conn.disconnect(); // Menutup koneksi ke database
+            conn.disconnect(); 
         }
     }
 
-    // Getter dan Setter untuk id dan role
     public int getId() {
         return id;
     }
@@ -68,11 +69,24 @@ public class LoginSingleton {
         this.id = id;
     }
 
-    public int getRole() {
-        return role;
+
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setRole(int role) {
-        this.role = role;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public static DatabaseHandler getConn() {
+        return conn;
+    }
+
+    public static void setConn(DatabaseHandler conn) {
+        LoginSingleton.conn = conn;
+    }
+
+    public static void setInstance(LoginSingleton instance) {
+        LoginSingleton.instance = instance;
     }
 }
