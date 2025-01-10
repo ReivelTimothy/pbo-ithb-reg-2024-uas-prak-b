@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2025 at 09:45 AM
+-- Generation Time: Jan 10, 2025 at 05:52 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `pratamadb`
+-- Database: `db_uas_1123010`
 --
 
 -- --------------------------------------------------------
@@ -40,7 +40,8 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`Id`, `Name`, `password`, `address`, `phone`) VALUES
-(1, 'Reivel', '123', 'Perumahan Taman Rahayu 3 C2 no 1 ', '082321534551');
+(1, 'Reivel', '123', 'Perumahan Taman Rahayu 3 C2 no 1 ', '082321534551'),
+(2, 'Rafael', '321', 'Perumahan Taman Rahayu 3 C2 no 2', '082321534551');
 
 -- --------------------------------------------------------
 
@@ -52,11 +53,21 @@ CREATE TABLE `deliverdetail` (
   `id` int(30) NOT NULL,
   `status` varchar(30) NOT NULL,
   `currentPosition` varchar(30) NOT NULL,
-  `evidence` varchar(30) NOT NULL,
+  `evidence` varchar(30) DEFAULT NULL,
   `updateBy` varchar(30) NOT NULL,
   `date` date NOT NULL,
   `transaction_id` int(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `deliverdetail`
+--
+
+INSERT INTO `deliverdetail` (`id`, `status`, `currentPosition`, `evidence`, `updateBy`, `date`, `transaction_id`) VALUES
+(1, 'PENDING', 'fsda', NULL, 'fsda', '1970-01-01', 1),
+(2, 'PENDING', 'jakarta', NULL, 'Reivel', '2025-01-01', 1),
+(3, 'IN_PROGRESS', 'Banjarmasin', NULL, 'Reivel', '2025-01-08', 1),
+(4, 'PENDING', 'jakarta', NULL, 'Reivel', '2025-01-01', 1);
 
 -- --------------------------------------------------------
 
@@ -67,7 +78,7 @@ CREATE TABLE `deliverdetail` (
 CREATE TABLE `delivertype` (
   `Type` varchar(30) NOT NULL,
   `Description` varchar(50) NOT NULL,
-  `Fee` double NOT NULL
+  `Fee` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -100,7 +111,11 @@ CREATE TABLE `transaction` (
 --
 
 INSERT INTO `transaction` (`id`, `expected_weight`, `deliver_type`, `receipt_address`, `receipt_phone`, `total_cost`, `customer_id`) VALUES
-(1, '10', 'Building Material', 'Perumahan Taman Rahayu 3 C2 no 1', '082321534551', 100000, 1);
+(1, '10', 'Building Material', 'Perumahan Taman Rahayu 3 C2 no 1', '082321534551', 100000, 1),
+(3, '102', 'Building Material', 'Perumahan Taman Rahayu 3 C2 no 1', '082321534551', 100000, 2),
+(4, '102', 'Building Material', 'Perumahan Taman Rahayu 3 C2 no 1', '082321534551', 100000, 2),
+(5, '4', 'Instant Deliver ', 'TKI', '3124141', 40000, 1),
+(6, '3', 'Building material ', 'TKI 2', '0381741041', 9000, 2);
 
 --
 -- Indexes for dumped tables
@@ -140,19 +155,19 @@ ALTER TABLE `transaction`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `deliverdetail`
 --
 ALTER TABLE `deliverdetail`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
